@@ -1,0 +1,11 @@
+---
+title: "LLindo_MiniDataAnalysis_1"
+author: "Lorenzo Lindo"
+date: "07/10/2021"
+output: html_document
+---
+
+library(datateachr)
+library(tidyverse)
+
+
