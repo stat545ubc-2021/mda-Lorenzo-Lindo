@@ -74,18 +74,19 @@ steam_games | I chose to continue exploring this dataset because I used to be a 
 ### The final decision - which one will I continue analyzing?
 Dataset | Why I chose this?
 --------|------------------
-steam_games | This will be the dataset that I will continue to explore because I like video games and it will make the analysis fun
+cancer_sample | This will be the dataset that I will continue to explore because my research focusses on cancer and the analyses I can attempt here are relevant to my research project
 
 
-## Task 2 - Exploring my Datasets
-### Task 2.1 - Some Initial Manipulation of the Datasets
-#### Plotting the Distribution of the xyz Variable in the cancer_sample dataset.
+## Task 2 - Exploring the cancer_samples dataset
+### Some Initial Manipulation of the Datasets
 
-#### Plotting the Distribution of the xyz Variable in the steam_games dataset.
-
-library(ggplot2)
-datateachr::cancer_sample %>% 
-  ggplot(aes(y = radius_mean)) +
-  geom_histogram()
-
+#### Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean)
+cancer_sample %>% 
+  ggplot(aes(x = radius_mean)) +
+  geom_histogram(binwidth = 0.5)
+  
+#### Exploring the relationship between the radius_mean and the area_mean
+cancer_sample %>% 
+  ggplot(aes(x = radius_mean, y = area_mean)) +
+  geom_point()
 
