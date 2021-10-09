@@ -89,4 +89,13 @@ cancer_sample %>%
 cancer_sample %>% 
   ggplot(aes(x = radius_mean, y = area_mean)) +
   geom_point()
+  
+  
+#### A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations
+cancer_sample %>% 
+  group_by(diagnosis) %>% 
+  ggplot(aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
+  geom_boxplot() +
+  labs(title = "Mean Area in Benign and Malignant Samples" )
+  theme_minimal()
 
