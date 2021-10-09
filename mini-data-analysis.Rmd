@@ -5,25 +5,76 @@ date: "07/10/2021"
 output: html_document
 ---
 
+# STAT545A - Mini Data Analysis Project (LINDO, Lorenzo)
 
 ## Load the required packages.
 Run the following code to load the required packages for this mini data analysis.
 ```{}
 library(datateachr)
 library(tidyverse)
+library(ggplot2)
+library(dplyr)
 ```
 
-## These datasets that will be used for this mini data analysis.
+## Task 1 - Exploring My Datasets of Interest
+### These datasets that will be used explored for this mini data analysis.
 Dataset Number | Dataset Name | Description of Data Set | Credit | Dimensions
 ---------------|--------------|-------------------------|--------|---------
-1 | cancer_sample | A dataset from cancer samples | Acquired courtesy of UCI Machine Learning Repository | 569 rows and 32 columns
-2 | steam_games | A dataset about games on the Steam platform | Acquired courtesy of Kaggle | 40833 rows and 21 columns
+1 | cancer_sample | Diagnostic Breast Cancer Data | Acquired courtesy of UCI Machine Learning Repository | 569 rows and 32 columns
+2 | steam_games | Contains games from Steam shop with detailed data downloaded from kaggle with a CC0 license | Acquired courtesy of Kaggle | 40833 rows and 21 columns
 3 | building_permits | Data about the City of Vancouver's building permits | Acquired courtesy of the City of Vancouver's Open Data Portal | 20680 rows and 14 columns
 4 | vancouver_trees | Data about Vancouver's trees | Acquired courtesy of the City of Vancouver's Open Data Portal | 146611 rows and 20 columns
 
-## Task 1 - Choose Your Favourite Dataset
+#### Exploring the cancer_sample dataset
+```
+head(cancer_sample)
+dim(cancer_sample)
+class(cancer_sample)
+cancer_sample %>% 
+  group_by(diagnosis) %>% 
+  summarise(radius_mean)
+```
+
+#### Exploring the steam_games dataset
+```
+head(steam_games) #Returns the first few rows
+dim(steam_games) #Returns the dimensions of the dataset (how many rows and columns)
+class(steam_games) #Returns the class of the dataset
+steam_games %>% 
+  group_by(genre) %>% 
+  summarize(n())
+```
+
+#### Exploring the building_permits dataset
+```
+head(building_permits) #Returns the first few rows
+dim(building_permits) #Returns the dimensions of the dataset (how many rows and columns)
+class(building_permits) #Returns the class of the dataset
+building_permits %>% 
+  group_by(type_of_work) %>% 
+  summarize(n())
+```
+
+#### Exploring the vancouver_trees dataset
+```
+head(vancouver_trees) #Returns the first few rows
+dim(vancouver_trees) #Returns the dimensions of the dataset (how many rows and columns)
+class(vancouver_trees) #Returns the class of the dataset
+vancouver_trees %>% 
+  group_by(genus_name) %>% 
+  summarize(n())
+```
+
 
 ## Task 2 - Exploring my Datasets
-head(datateachr::steam_games)
-dim(datateachr::cancer_sample)
+### Task 2.1 - Some Initial Manipulation of the Datasets
+#### Plotting the Distribution of the xyz Variable in the cancer_sample dataset.
+
+#### Plotting the Distribution of the xyz Variable in the steam_games dataset.
+
+library(ggplot2)
+datateachr::cancer_sample %>% 
+  ggplot(aes(y = radius_mean)) +
+  geom_histogram()
+
 
