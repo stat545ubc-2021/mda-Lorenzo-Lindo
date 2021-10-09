@@ -1,11 +1,29 @@
 ---
-title: "LLindo_MiniDataAnalysis_1"
+title: "mini-data-analysis"
 author: "Lorenzo Lindo"
 date: "07/10/2021"
 output: html_document
 ---
 
+
+## Load the required packages.
+Run the following code to load the required packages for this mini data analysis.
+```{}
 library(datateachr)
 library(tidyverse)
+```
 
+## These datasets that will be used for this mini data analysis.
+Dataset Number | Dataset Name | Description of Data Set | Credit | Dimensions
+---------------|--------------|-------------------------|--------|---------
+1 | cancer_sample | A dataset from cancer samples | Acquired courtesy of UCI Machine Learning Repository | 569 rows and 32 columns
+2 | steam_games | A dataset about games on the Steam platform | Acquired courtesy of Kaggle | 40833 rows and 21 columns
+3 | building_permits | Data about the City of Vancouver's building permits | Acquired courtesy of the City of Vancouver's Open Data Portal | 20680 rows and 14 columns
+4 | vancouver_trees | Data about Vancouver's trees | Acquired courtesy of the City of Vancouver's Open Data Portal | 146611 rows and 20 columns
+
+## Task 1 - Choose Your Favourite Dataset
+
+## Task 2 - Exploring my Datasets
+head(datateachr::steam_games)
+dim(datateachr::cancer_sample)
 
