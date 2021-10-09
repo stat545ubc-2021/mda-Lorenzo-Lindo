@@ -27,12 +27,12 @@ Dataset Number | Dataset Name | Description of Data Set | Credit | Dimensions
 
 #### Exploring the cancer_sample dataset
 ```
-head(cancer_sample)
-dim(cancer_sample)
-class(cancer_sample)
+head(cancer_sample) #Returns the first few rows
+dim(cancer_sample) #Returns the dimensions of the dataset (how many rows and columns)
+class(cancer_sample) #Returns the class of the dataset
 cancer_sample %>% 
   group_by(diagnosis) %>% 
-  summarise(radius_mean)
+  summarise(perimeter_mean_median = mean(perimeter_mean, na.rm = TRUE))
 ```
 
 #### Exploring the steam_games dataset
@@ -64,6 +64,17 @@ vancouver_trees %>%
   group_by(genus_name) %>% 
   summarize(n())
 ```
+
+### Narrowing down to 2 datasets of interest
+Dataset | Why I chose this?
+--------|------------------
+cancer_sample | I chose to continue exploring this dataset because my research is focussed on cancer and I wanted to practice data wrangling and analysis on a dataset related to cancer
+steam_games | I chose to continue exploring this dataset because I used to be a big Steam gamer and I wanted to analyze some data about games
+
+### The final decision - which one will I continue analyzing?
+Dataset | Why I chose this?
+--------|------------------
+steam_games | This will be the dataset that I will continue to explore because I like video games and it will make the analysis fun
 
 
 ## Task 2 - Exploring my Datasets
