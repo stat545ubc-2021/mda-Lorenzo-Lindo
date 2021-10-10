@@ -247,103 +247,112 @@ vancouver_trees %>%
 
 ### Narrowing down to 2 datasets of interest
 
-| Dataset       | Why I chose this?                                                                                                                                                        |
-|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| cancer_sample | I chose to continue exploring this dataset because my research is focussed on cancer and I wanted to practice data wrangling and analysis on a dataset related to cancer |
-| steam_games   | I chose to continue exploring this dataset because I used to be a big Steam gamer and I wanted to analyze some data about games                                          |
+| Dataset         | Why I chose this?                                                                                                                                                         |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| cancer_sample   | I chose to continue exploring this dataset because my research is focussed on cancer and I wanted to practice data wrangling and analysis on a dataset related to cancer. |
+| vancouver_trees | I chose to continue exploring this dataset because I am a born and raised Vancouverite and I really love nature, so I thought this might be very interesting.             |
 
 ### The final decision - which one will I continue analyzing?
 
-| Dataset       | Why I chose this?                                                                                                                                                       |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| cancer_sample | This will be the dataset that I will continue to explore because my research focusses on cancer and the analyses I can attempt here are relevant to my research project |
+| Dataset         | Possible Research Questions                                                                        |
+|-----------------|----------------------------------------------------------------------------------------------------|
+| cancer_sample   | How does the median of the mean area of nuclei compare between benign and malignant breast masses? |
+| vancouver_trees | Is there a statistically significant difference in the number of trees of different genera?        |
 
-## Task 2 - Exploring the cancer_samples dataset
+**My Final Choice**: I will analyze the **vancouver_trees** dataset.
+This will be the dataset that I will continue to explore. While the
+cancer_sample dataset is interesting because my research focusses on
+cancer, this dataset only contains one categorical variable and all
+other variables are numerical. Since there is only one categorical
+variable, it made it difficult for me to think of research questions
+besides asking if there is any difference between malignant and benign
+breast masses. I also thought it would be fun to explore the diversity
+of trees in my hometown of Vancouver.
+
+## Task 2 - Exploring the vancouver_trees dataset
 
 ### Some Initial Manipulation of the Datasets
 
 #### Exercise Option 1:
 
-Plotting the distribution of the mean radius of nuclei present in the
-sample images in this dataset (variable = radius_mean). **Rationale**:
-This was done to get a sense of the distribution of the radius_mean
-variable.
+Plotting the distribution of the diameter of trees. **Rationale**: This
+was done to get a sense of the distribution of the diameter variable.
 
 ``` r
-cancer_sample %>% 
-  ggplot(aes(x = radius_mean)) +
-  geom_histogram(binwidth = 0.5)
+vancouver_trees %>% 
+  ggplot(aes(x = diameter)) +
+  geom_histogram()
 ```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 ![](mini-data-analysis-milestone1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 #### Exercise Option 2:
 
-Calculating the expected area_mean of the nuclei present based on the
-observed radius_mean and assigning it as a new variable. **Rationale**:
-This was done to calculate what the expected mean area would be of the
-nuclei given the observed mean radii of the nuclei observed. This could
-be explored later as a research question to see how close the observed
-mean area is to the expected mean area.
+Calculating the expected circumference of trees based on the observed
+diameter and assigning it as a new variable. **Rationale**: This was
+done to calculate what the expected tree circumference would be given
+the observed diameter of each tree observed.
 
 ``` r
-cancer_sample %>% 
-  mutate(expected_area_mean = (radius_mean)^2 * pi) %>% 
-  relocate(expected_area_mean, .after = radius_mean) %>% 
-  relocate(area_mean, .after = expected_area_mean)
+vancouver_trees %>% 
+  mutate(expected_circumference = (diameter) * pi) %>% 
+  relocate(diameter, .after = std_street) %>% 
+  relocate(expected_circumference, .after = diameter)
 ```
 
-    ## # A tibble: 569 × 33
-    ##          ID diagnosis radius_mean expected_area_mean area_mean texture_mean
-    ##       <dbl> <chr>           <dbl>              <dbl>     <dbl>        <dbl>
-    ##  1   842302 M                18.0              1017.     1001          10.4
-    ##  2   842517 M                20.6              1329.     1326          17.8
-    ##  3 84300903 M                19.7              1218.     1203          21.2
-    ##  4 84348301 M                11.4               410.      386.         20.4
-    ##  5 84358402 M                20.3              1293.     1297          14.3
-    ##  6   843786 M                12.4               487.      477.         15.7
-    ##  7   844359 M                18.2              1046.     1040          20.0
-    ##  8 84458202 M                13.7               591.      578.         20.8
-    ##  9   844981 M                13                 531.      520.         21.8
-    ## 10 84501001 M                12.5               488.      476.         24.0
-    ## # … with 559 more rows, and 27 more variables: perimeter_mean <dbl>,
-    ## #   smoothness_mean <dbl>, compactness_mean <dbl>, concavity_mean <dbl>,
-    ## #   concave_points_mean <dbl>, symmetry_mean <dbl>,
-    ## #   fractal_dimension_mean <dbl>, radius_se <dbl>, texture_se <dbl>,
-    ## #   perimeter_se <dbl>, area_se <dbl>, smoothness_se <dbl>,
-    ## #   compactness_se <dbl>, concavity_se <dbl>, concave_points_se <dbl>,
-    ## #   symmetry_se <dbl>, fractal_dimension_se <dbl>, radius_worst <dbl>, …
+    ## # A tibble: 146,611 × 21
+    ##    tree_id civic_number std_street    diameter expected_circumference genus_name
+    ##      <dbl>        <dbl> <chr>            <dbl>                  <dbl> <chr>     
+    ##  1  149556          494 W 58TH AV         10                     31.4 ULMUS     
+    ##  2  149563          450 W 58TH AV         10                     31.4 ZELKOVA   
+    ##  3  149579         4994 WINDSOR ST         4                     12.6 STYRAX    
+    ##  4  149590          858 E 39TH AV         18                     56.5 FRAXINUS  
+    ##  5  149604         5032 WINDSOR ST         9                     28.3 ACER      
+    ##  6  149616          585 W 61ST AV          5                     15.7 PYRUS     
+    ##  7  149617         4909 SHERBROOKE ST     15                     47.1 ACER      
+    ##  8  149618         4925 SHERBROOKE ST     14                     44.0 ACER      
+    ##  9  149619         4969 SHERBROOKE ST     16                     50.3 ACER      
+    ## 10  149625          720 E 39TH AV          7.5                   23.6 FRAXINUS  
+    ## # … with 146,601 more rows, and 15 more variables: species_name <chr>,
+    ## #   cultivar_name <chr>, common_name <chr>, assigned <chr>, root_barrier <chr>,
+    ## #   plant_area <chr>, on_street_block <dbl>, on_street <chr>,
+    ## #   neighbourhood_name <chr>, street_side_name <chr>, height_range_id <dbl>,
+    ## #   curb <chr>, date_planted <date>, longitude <dbl>, latitude <dbl>
 
 #### Exercise Option 4:
 
-Exploring the relationship between the radius_mean and the area_mean.
-**Rationale**: This was done to see if there is any correlation between
-these two variables.
+Exploring the relationship between the diameter of the trees and the
+latitude. **Rationale**: This was an exploratory analysis to see if
+there is any trend between the diameter and the latitude. If you run the
+following code, it doesn’t seem like there is any trend on first glance.
 
 ``` r
-cancer_sample %>% 
-  ggplot(aes(x = radius_mean, y = area_mean)) +
+vancouver_trees %>% 
+  ggplot(aes(x = diameter, y = latitude)) +
   geom_point()
 ```
+
+    ## Warning: Removed 22771 rows containing missing values (geom_point).
 
 ![](mini-data-analysis-milestone1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 #### Exercise Option 6:
 
-A boxplot of the frequency of different observations of the area_mean in
-either “M” malignant or “B” benign observations. **Rationale**: This was
-done to see if there is any difference in the mean area of the nuclei in
-between those who were ultimately diagnosed with a malignant breast mass
-or a benign breast mass.
+A boxplot looking at the height range of Vancouver trees based on
+whether or not they have a root barrier installed. **Rationale**: This
+was done to see if there is any difference in the height range of trees
+among those trees with or without a root barrier installed.
 
 ``` r
-cancer_sample %>% 
-  group_by(diagnosis) %>% 
-  ggplot(aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
+vancouver_trees %>% 
+  group_by(root_barrier) %>% 
+  ggplot(aes(x = root_barrier, y = height_range_id, colour = root_barrier)) +
   geom_boxplot() +
-  labs(title = "Mean Area in Benign and Malignant Samples" ) +
-  xlab("Diagnosis (diagnosis)") +
-  ylab("Mean Area of Nuclei (area_mean)") +
+  labs(title = "Frequency of Root Barriers Among Vancouver Trees" ) +
+  xlab("Root Barrier? (variable = root_barrier)") +
+  ylab("Height Range (variable = height_range_id") +
   theme_minimal()
 ```
 
@@ -354,9 +363,9 @@ cancer_sample %>%
 Below are my proposed research questions for this dataset. I also
 include some rationale and expected outcomes
 
-| Question Number | Research Question                                                                                                                                                                       | Rationale                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1               | Is there a significant difference in the mean area of the nuclei present in sample images between those who had a malignant breast mass compared to those who had a benign breast mass. | This will give us a sense as to whether there is any relationship between mean nuclei area and diagnosis. We would expect that those with a malignant diagnosis would have a greater nuclei mass, which would be consistent with observations in the literature. I would want to test the significance of this difference in this dataset.                                                                                                                                       |
-| 2               | What is the relationship between the mean smoothness of nuclei and the mean area of nuclei?                                                                                             | I would predict that larger nuclei would be less smooth. This is because larger nuclei typically denote actively replicating cells, so if the genetic material is replicating, it may make the morphology of the nuclei look more rough. Therefore, I would predict that there is an inverse relationship between mean area and mean smoothness. I would also want to explore if this relationship is modified when I subset between those with a benign or malignant diagnosis. |
-| 3               | Can we predict the mean area based on the mean radius?                                                                                                                                  | It would make sense that if given a mean radius, we could calculate a mean area. However, nuclei are often not perfect circles, and therefore we would expect a degree of variation. I would therefore first calculate the expected mean area from the mean radius (as I had done in Task 2), then I would want to determine the correlation between the expected mean area and the observed mean area.                                                                          |
-| 4               | Is there a significant difference in the standard error of smoothness of nuclei between those with a malignant or benign breast mass?                                                   | I would predict that those with a malignant breast mass would have a greater standard error of smoothness of nuclei because cancerous cells tend to be dysregulated and as a result often have more variability in their morphology.                                                                                                                                                                                                                                             |
+| Question Number | Research Question                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1               | Is there a significant difference in the number of trees between the East and West sides of Vancouver? I would be interested in seeing if there is any difference in the frequency of trees between the East and West sides and if this difference is statistically significant. I would need to create a new categorical variable to classify trees as either in the East or West sides (I could divide Vancouver based on longitude) then plot a graph. |
+| 2               | Does the presence of a root barrier affect the diameter of trees? Root barriers are structures that are meant to guide tree roots down and away from human-made structures (e.g. building foundations, gas pipes, electrical wires). I am interested to see if these root guides have any affect on the diameter of trees.                                                                                                                                |
+| 3               | Is there a difference in the frequency of tree species within a specific genus in a neighbourhood of interest? Within a specified neighbourhood (e.g. Riley Park), and within a given genus of interest (e.g. Prunus), are there any differences in the frequency among tree species?                                                                                                                                                                     |
+| 4               | Are there any differences in the height range of all trees between neighbourhoods in Vancouver? Neighbourhoods have a lot of differences, including local climates, levels of urbanization, and proximity to bodies of water (among others). I would like to see if there is any statistically significant difference in the mean number of trees among Vancouver’s neighbourhoods.                                                                       |
