@@ -80,14 +80,14 @@ cancer_sample | This will be the dataset that I will continue to explore because
 ## Task 2 - Exploring the cancer_samples dataset
 ### Some Initial Manipulation of the Datasets
 
-#### Exercise Option 1: Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean)
+#### Exercise Option 1: Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean).  **Rationale**: This was done to get a sense of the distribution of the radius_mean variable.
 ```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean)) +
   geom_histogram(binwidth = 0.5)
 ```
 
-#### Exercise Option 2: Calculating the expected area_mean of the nuclei present based on the observed radius_mean and assigning it as a new variable.  
+#### Exercise Option 2: Calculating the expected area_mean of the nuclei present based on the observed radius_mean and assigning it as a new variable.  **Rationale**: This was done to calculate what the expected mean area would be of the nuclei given the observed mean radii of the nuclei observed.  This could be explored later as a research question to see how close the observed mean area is to the expected mean area.
 ```
 cancer_sample %>% 
   mutate(expected_area_mean = (radius_mean)^2 * pi) %>% 
@@ -95,14 +95,14 @@ cancer_sample %>%
   relocate(area_mean, .after = expected_area_mean)
 ```
 
-#### Exercise Option 4: Exploring the relationship between the radius_mean and the area_mean
+#### Exercise Option 4: Exploring the relationship between the radius_mean and the area_mean.  **Rationale**: This was done to see if there is any correlation between these two variables.
 ```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean, y = area_mean)) +
   geom_point()
 ```
   
-#### Exercise Option 6: A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations
+#### Exercise Option 6: A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations.  **Rationale**: This was done to see if there is any difference in the mean area of the nuclei in between those who were ultimately diagnosed with a malignant breast mass or a benign breast mass.
 ```
 cancer_sample %>% 
   group_by(diagnosis) %>% 
