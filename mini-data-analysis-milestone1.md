@@ -349,7 +349,7 @@ cancer_sample %>%
 
 ![](mini-data-analysis-milestone1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-## Task 2 - Writing my Research Questions
+## Task 3 - Writing my Research Questions
 
 Below are my proposed research questions for this dataset. I also
 include some rationale and expected outcomes
