@@ -277,6 +277,10 @@ of trees in my hometown of Vancouver.
 
 Plotting the distribution of the diameter of trees. **Rationale**: This
 was done to get a sense of the distribution of the diameter variable.
+The following code takes the vancouver_trees dataset and generates a
+histogram with diameter on the x axis and count on the y axis. This
+histogram plots the distribution of the diameter of trees in this
+dataset.
 
 ``` r
 vancouver_trees %>% 
@@ -293,7 +297,11 @@ vancouver_trees %>%
 Calculating the expected circumference of trees based on the observed
 diameter and assigning it as a new variable. **Rationale**: This was
 done to calculate what the expected tree circumference would be given
-the observed diameter of each tree observed.
+the observed diameter of each tree observed. The following code creates
+a new variable that contains the expected circumference based on the
+observed diameter of trees. It calculates circumference by multiplaying
+the diameter by pi. It also relocates both the diameter and expected
+circumference columns such that they appear after the std_street column.
 
 ``` r
 vancouver_trees %>% 
@@ -327,6 +335,8 @@ Exploring the relationship between the diameter of the trees and the
 latitude. **Rationale**: This was an exploratory analysis to see if
 there is any trend between the diameter and the latitude. If you run the
 following code, it doesn’t seem like there is any trend on first glance.
+The following code generates a scatterplot with diameter on the x axis
+and latitude on the y axis.
 
 ``` r
 vancouver_trees %>% 
@@ -343,7 +353,13 @@ vancouver_trees %>%
 A boxplot looking at the height range of Vancouver trees based on
 whether or not they have a root barrier installed. **Rationale**: This
 was done to see if there is any difference in the height range of trees
-among those trees with or without a root barrier installed.
+among those trees with or without a root barrier installed. The
+following code first groups the data by the presence or absence of a
+root barrier, then generates a box plot. The box plot contains the
+presence or absence (Y/N) of a root barrier on the x-axis, and the
+height range on the y-axis. It colours the box plots based on the
+presence or absence of a root barrier. I have also renamed the axes
+titles and added a plot title.
 
 ``` r
 vancouver_trees %>% 
