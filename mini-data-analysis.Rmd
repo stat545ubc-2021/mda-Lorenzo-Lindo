@@ -80,14 +80,16 @@ cancer_sample | This will be the dataset that I will continue to explore because
 ## Task 2 - Exploring the cancer_samples dataset
 ### Some Initial Manipulation of the Datasets
 
-#### Exercise Option 1: Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean).  **Rationale**: This was done to get a sense of the distribution of the radius_mean variable.
+#### Exercise Option 1: 
+Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean).  **Rationale**: This was done to get a sense of the distribution of the radius_mean variable.
 ```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean)) +
   geom_histogram(binwidth = 0.5)
 ```
 
-#### Exercise Option 2: Calculating the expected area_mean of the nuclei present based on the observed radius_mean and assigning it as a new variable.  **Rationale**: This was done to calculate what the expected mean area would be of the nuclei given the observed mean radii of the nuclei observed.  This could be explored later as a research question to see how close the observed mean area is to the expected mean area.
+#### Exercise Option 2: 
+Calculating the expected area_mean of the nuclei present based on the observed radius_mean and assigning it as a new variable.  **Rationale**: This was done to calculate what the expected mean area would be of the nuclei given the observed mean radii of the nuclei observed.  This could be explored later as a research question to see how close the observed mean area is to the expected mean area.
 ```
 cancer_sample %>% 
   mutate(expected_area_mean = (radius_mean)^2 * pi) %>% 
@@ -95,14 +97,16 @@ cancer_sample %>%
   relocate(area_mean, .after = expected_area_mean)
 ```
 
-#### Exercise Option 4: Exploring the relationship between the radius_mean and the area_mean.  **Rationale**: This was done to see if there is any correlation between these two variables.
+#### Exercise Option 4: 
+Exploring the relationship between the radius_mean and the area_mean.  **Rationale**: This was done to see if there is any correlation between these two variables.
 ```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean, y = area_mean)) +
   geom_point()
 ```
   
-#### Exercise Option 6: A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations.  **Rationale**: This was done to see if there is any difference in the mean area of the nuclei in between those who were ultimately diagnosed with a malignant breast mass or a benign breast mass.
+#### Exercise Option 6: 
+A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations.  **Rationale**: This was done to see if there is any difference in the mean area of the nuclei in between those who were ultimately diagnosed with a malignant breast mass or a benign breast mass.
 ```
 cancer_sample %>% 
   group_by(diagnosis) %>% 
@@ -115,3 +119,12 @@ cancer_sample %>%
   theme_minimal()
 ```  
 
+## Task 2 - Writing my Research Questions
+Below are my proposed research questions for this dataset.  I also include some rationale and expected outcomes
+
+Question Number | Research Question | Rationale
+----------------|-------------------|----------
+1 | Is there a significant difference in the mean area of the nuclei present in sample images between those who had a malignant breast mass compared to those who had a benign breast mass. | This will give us a sense as to whether there is any relationship between mean nuclei area and diagnosis.  We would expect that those with a malignant diagnosis would have a greater nuclei mass, which would be consistent with observations in the literature.  I would want to test the significance of this difference in this dataset.
+2 | What is the relationship between the mean smoothness of nuclei and the mean area of nuclei? | I would predict that larger nuclei would be less smooth.  This is because larger nuclei typically denote actively replicating cells, so if the genetic material is replicating, it may make the morphology of the nuclei look more rough.  Therefore, I would predict that there is an inverse relationship between mean area and mean smoothness.  I would also want to explore if this relationship is modified when I subset between those with a benign or malignant diagnosis.
+3 | Can we predict the mean area based on the mean radius? | It would make sense that if given a mean radius, we could calculate a mean area.  However, nuclei are often not perfect circles, and therefore we would expect a degree of variation.  I would therefore first calculate the expected mean area from the mean radius (as I had done in Task 2), then I would want to determine the correlation between the expected mean area and the observed mean area.  
+4 | Is there a significant difference in the standard error of smoothness of nuclei between those with a malignant or benign breast mass? | I would predict that those with a malignant breast mass would have a greater standard error of smoothness of nuclei because cancerous cells tend to be dysregulated and as a result often have more variability in their morphology.
