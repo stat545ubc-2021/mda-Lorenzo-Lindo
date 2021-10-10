@@ -1,0 +1,144 @@
+mini-data-analysis-milestone1
+================
+Lorenzo Lindo
+07/10/2021
+
+# STAT545A - Mini Data Analysis Project: Milestone 1 (LINDO, Lorenzo)
+
+## Load the required packages.
+
+Run the following code to load the required packages for this mini data
+analysis.
+
+    library(datateachr)
+    library(tidyverse)
+    library(ggplot2)
+    library(dplyr)
+
+## Task 1 - Exploring My Datasets of Interest
+
+### These datasets that will be used explored for this mini data analysis.
+
+| Dataset Number | Dataset Name     | Description of Data Set                                                                     | Credit                                                        | Dimensions                 |
+|----------------|------------------|---------------------------------------------------------------------------------------------|---------------------------------------------------------------|----------------------------|
+| 1              | cancer_sample    | Diagnostic Breast Cancer Data                                                               | Acquired courtesy of UCI Machine Learning Repository          | 569 rows and 32 columns    |
+| 2              | steam_games      | Contains games from Steam shop with detailed data downloaded from kaggle with a CC0 license | Acquired courtesy of Kaggle                                   | 40833 rows and 21 columns  |
+| 3              | building_permits | Data about the City of Vancouver’s building permits                                         | Acquired courtesy of the City of Vancouver’s Open Data Portal | 20680 rows and 14 columns  |
+| 4              | vancouver_trees  | Data about Vancouver’s trees                                                                | Acquired courtesy of the City of Vancouver’s Open Data Portal | 146611 rows and 20 columns |
+
+#### Exploring the cancer_sample dataset
+
+    head(cancer_sample) #Returns the first few rows
+    dim(cancer_sample) #Returns the dimensions of the dataset (how many rows and columns)
+    class(cancer_sample) #Returns the class of the dataset
+    cancer_sample %>% 
+      group_by(diagnosis) %>% 
+      summarise(perimeter_mean_median = mean(perimeter_mean, na.rm = TRUE))
+
+#### Exploring the steam_games dataset
+
+    head(steam_games) #Returns the first few rows
+    dim(steam_games) #Returns the dimensions of the dataset (how many rows and columns)
+    class(steam_games) #Returns the class of the dataset
+    steam_games %>% 
+      group_by(genre) %>% 
+      summarize(n())
+
+#### Exploring the building_permits dataset
+
+    head(building_permits) #Returns the first few rows
+    dim(building_permits) #Returns the dimensions of the dataset (how many rows and columns)
+    class(building_permits) #Returns the class of the dataset
+    building_permits %>% 
+      group_by(type_of_work) %>% 
+      summarize(n())
+
+#### Exploring the vancouver_trees dataset
+
+    head(vancouver_trees) #Returns the first few rows
+    dim(vancouver_trees) #Returns the dimensions of the dataset (how many rows and columns)
+    class(vancouver_trees) #Returns the class of the dataset
+    vancouver_trees %>% 
+      group_by(genus_name) %>% 
+      summarize(n())
+
+### Narrowing down to 2 datasets of interest
+
+| Dataset       | Why I chose this?                                                                                                                                                        |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| cancer_sample | I chose to continue exploring this dataset because my research is focussed on cancer and I wanted to practice data wrangling and analysis on a dataset related to cancer |
+| steam_games   | I chose to continue exploring this dataset because I used to be a big Steam gamer and I wanted to analyze some data about games                                          |
+
+### The final decision - which one will I continue analyzing?
+
+| Dataset       | Why I chose this?                                                                                                                                                       |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| cancer_sample | This will be the dataset that I will continue to explore because my research focusses on cancer and the analyses I can attempt here are relevant to my research project |
+
+## Task 2 - Exploring the cancer_samples dataset
+
+### Some Initial Manipulation of the Datasets
+
+#### Exercise Option 1:
+
+Plotting the distribution of the mean radius of nuclei present in the
+sample images in this dataset (variable = radius_mean). **Rationale**:
+This was done to get a sense of the distribution of the radius_mean
+variable.
+
+    cancer_sample %>% 
+      ggplot(aes(x = radius_mean)) +
+      geom_histogram(binwidth = 0.5)
+
+#### Exercise Option 2:
+
+Calculating the expected area_mean of the nuclei present based on the
+observed radius_mean and assigning it as a new variable. **Rationale**:
+This was done to calculate what the expected mean area would be of the
+nuclei given the observed mean radii of the nuclei observed. This could
+be explored later as a research question to see how close the observed
+mean area is to the expected mean area.
+
+    cancer_sample %>% 
+      mutate(expected_area_mean = (radius_mean)^2 * pi) %>% 
+      relocate(expected_area_mean, .after = radius_mean) %>% 
+      relocate(area_mean, .after = expected_area_mean)
+
+#### Exercise Option 4:
+
+Exploring the relationship between the radius_mean and the area_mean.
+**Rationale**: This was done to see if there is any correlation between
+these two variables.
+
+    cancer_sample %>% 
+      ggplot(aes(x = radius_mean, y = area_mean)) +
+      geom_point()
+
+#### Exercise Option 6:
+
+A boxplot of the frequency of different observations of the area_mean in
+either “M” malignant or “B” benign observations. **Rationale**: This was
+done to see if there is any difference in the mean area of the nuclei in
+between those who were ultimately diagnosed with a malignant breast mass
+or a benign breast mass.
+
+    cancer_sample %>% 
+      group_by(diagnosis) %>% 
+      ggplot(aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
+      geom_boxplot() +
+      labs(title = "Mean Area in Benign and Malignant Samples" ) +
+      xlab("Diagnosis (diagnosis)") +
+      ylab("Mean Area of Nuclei (area_mean)") +
+      theme_minimal()
+
+## Task 2 - Writing my Research Questions
+
+Below are my proposed research questions for this dataset. I also
+include some rationale and expected outcomes
+
+| Question Number | Research Question                                                                                                                                                                       | Rationale                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1               | Is there a significant difference in the mean area of the nuclei present in sample images between those who had a malignant breast mass compared to those who had a benign breast mass. | This will give us a sense as to whether there is any relationship between mean nuclei area and diagnosis. We would expect that those with a malignant diagnosis would have a greater nuclei mass, which would be consistent with observations in the literature. I would want to test the significance of this difference in this dataset.                                                                                                                                       |
+| 2               | What is the relationship between the mean smoothness of nuclei and the mean area of nuclei?                                                                                             | I would predict that larger nuclei would be less smooth. This is because larger nuclei typically denote actively replicating cells, so if the genetic material is replicating, it may make the morphology of the nuclei look more rough. Therefore, I would predict that there is an inverse relationship between mean area and mean smoothness. I would also want to explore if this relationship is modified when I subset between those with a benign or malignant diagnosis. |
+| 3               | Can we predict the mean area based on the mean radius?                                                                                                                                  | It would make sense that if given a mean radius, we could calculate a mean area. However, nuclei are often not perfect circles, and therefore we would expect a degree of variation. I would therefore first calculate the expected mean area from the mean radius (as I had done in Task 2), then I would want to determine the correlation between the expected mean area and the observed mean area.                                                                          |
+| 4               | Is there a significant difference in the standard error of smoothness of nuclei between those with a malignant or benign breast mass?                                                   | I would predict that those with a malignant breast mass would have a greater standard error of smoothness of nuclei because cancerous cells tend to be dysregulated and as a result often have more variability in their morphology.                                                                                                                                                                                                                                             |
