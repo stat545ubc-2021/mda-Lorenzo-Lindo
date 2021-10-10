@@ -80,22 +80,38 @@ cancer_sample | This will be the dataset that I will continue to explore because
 ## Task 2 - Exploring the cancer_samples dataset
 ### Some Initial Manipulation of the Datasets
 
-#### Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean)
+#### Exercise Option 1: Plotting the distribution of the mean radius of nuclei present in the sample images in this dataset (variable = radius_mean)
+```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean)) +
   geom_histogram(binwidth = 0.5)
-  
-#### Exploring the relationship between the radius_mean and the area_mean
+```
+
+#### Exercise Option 2: Calculating the expected area_mean of the nuclei present based on the observed radius_mean and assigning it as a new variable.  
+```
+cancer_sample %>% 
+  mutate(expected_area_mean = (radius_mean)^2 * pi) %>% 
+  relocate(expected_area_mean, .after = radius_mean) %>% 
+  relocate(area_mean, .after = expected_area_mean)
+```
+
+#### Exercise Option 4: Exploring the relationship between the radius_mean and the area_mean
+```
 cancer_sample %>% 
   ggplot(aes(x = radius_mean, y = area_mean)) +
   geom_point()
+```
   
-  
-#### A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations
+#### Exercise Option 6: A boxplot of the frequency of different observations of the area_mean in either "M" malignant or "B" benign observations
+```
 cancer_sample %>% 
   group_by(diagnosis) %>% 
   ggplot(aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
   geom_boxplot() +
-  labs(title = "Mean Area in Benign and Malignant Samples" )
+#  geom_jitter(width = .3, alpha = 0.5) +
+  labs(title = "Mean Area in Benign and Malignant Samples" ) +
+  xlab("Diagnosis (diagnosis)") +
+  ylab("Mean Area of Nuclei (area_mean)") +
   theme_minimal()
+```  
 
