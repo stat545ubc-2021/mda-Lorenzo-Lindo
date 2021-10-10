@@ -2,7 +2,7 @@
 title: "mini-data-analysis-milestone1"
 author: "Lorenzo Lindo"
 date: "07/10/2021"
-output: html_document
+output: md_document
 ---
 
 # STAT545A - Mini Data Analysis Project: Milestone 1 (LINDO, Lorenzo)
