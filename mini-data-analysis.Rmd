@@ -1,11 +1,11 @@
 ---
-title: "mini-data-analysis"
+title: "mini-data-analysis-milestone1"
 author: "Lorenzo Lindo"
 date: "07/10/2021"
 output: html_document
 ---
 
-# STAT545A - Mini Data Analysis Project (LINDO, Lorenzo)
+# STAT545A - Mini Data Analysis Project: Milestone 1 (LINDO, Lorenzo)
 
 ## Load the required packages.
 Run the following code to load the required packages for this mini data analysis.
@@ -112,7 +112,6 @@ cancer_sample %>%
   group_by(diagnosis) %>% 
   ggplot(aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
   geom_boxplot() +
-#  geom_jitter(width = .3, alpha = 0.5) +
   labs(title = "Mean Area in Benign and Malignant Samples" ) +
   xlab("Diagnosis (diagnosis)") +
   ylab("Mean Area of Nuclei (area_mean)") +
