@@ -42,10 +42,10 @@ From milestone 1, you should have an idea of the basic structure of your dataset
 First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
 
 <!-------------------------- Start your work below ---------------------------->
-1. *FILL_THIS_IN*
-2. *FILL_THIS_IN*
-3. *FILL_THIS_IN*
-4. *FILL_THIS_IN*
+1. Is there a significant difference in the number of trees between the East and West sides of Vancouver? I would be interested in seeing if there is any difference in the frequency of trees between the East and West sides and if this difference is statistically significant.  I would need to create a new categorical variable to classify trees as either in the East or West sides (I could divide Vancouver based on longitude) then plot a graph.
+2. Does the presence of a root barrier affect the diameter of trees? Root barriers are structures that are meant to guide tree roots down and away from human-made structures (e.g. building foundations, gas pipes, electrical wires).  I am interested to see if these root guides have any affect on the diameter of trees.
+3. Is there a difference in the frequency of tree species within a specific genus in a neighbourhood of interest? Within a specified neighbourhood (e.g. Riley Park), and within a given genus of interest (e.g. Prunus), are there any differences in the frequency among tree species?
+4. Are there any differences in the height range of all trees between neighbourhoods in Vancouver?  Neighbourhoods have a lot of differences, including local climates, levels of urbanization, and proximity to bodies of water (among others).  I would like to see if there is any statistically significant difference in the mean number of trees among Vancouver's neighbourhoods.
 <!----------------------------------------------------------------------------->
 
 ### 1.2 (10 points)
