@@ -99,51 +99,101 @@ vancouver_trees %>% filter(street_side_name %in% c("EVEN", "ODD")) %>% ggplot(ae
   scale_y_continuous(trans = "log10") +
   xlab("Even or Odd Side of Street") +
   ylab("Number of Trees") +
-  ggtitle("Number of trees found in Even or Odd sides of the street in Vancouver")
+  ggtitle("Number of trees found in Even or Odd sides of the street in Vancouver") +
+  theme_minimal()
 
 ```
 
-### Question 2
-**Does the presence of a root barrier affect the diameter of trees?**
+### Research Question 2
+
+#### Summarizing: Compute the number of observations for at least one of your categorical variables.
+```{r}
 no_root_barrier <- sum(with(vancouver_trees, root_barrier == "N"))
 has_root_barrier <- sum(with(vancouver_trees, root_barrier == "Y"))
-num_observations <- nrow(vancouver_trees)
+print(paste0("The number of trees that have a root barrier is ", has_root_barrier, " and the number of trees that do not have a root barier is ", no_root_barrier))
+```
 
-### Question 3
-**Is there a difference in the frequency of tree species within a specific genus in a neighbourhood of interest? Within a specified neighbourhood (e.g. Riley Park), and within a given genus of interest (e.g. Prunus), are there any differences in the frequency among tree species?**
+#### Graphing: Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
+The code below will generate a bar graph comparing the number of trees with and without a root barrier.
+```{r}
+vancouver_trees %>% filter(root_barrier %in% c("N", "Y")) %>% ggplot(aes(x = root_barrier)) +
+  geom_bar() +
+  scale_y_continuous(trans = "log10") +
+  xlab("Absence (N) or Presence (Y) of a Root Barrier") +
+  ylab("Number (Count)") +
+  ggtitle("Quantification of Trees With or Without a Root Barrier") +
+  theme_minimal()
+
+```
+
+### Research Question 3
 
 #### Summarizing: Based on two categorical variables, calculate two summary statistics of your choosing. 
-The code below will calculate the mean frequency of each tree species within the "Acer" genus in the entire dataset.
+The code below will calculate the mean and range of the frequency of ULMUS AMERICANA among neighbourhoods in Vancouver.  It will first create a tibble that returns the number of ULMUS AMERICANA per neighbourhood.
 ```{r}
-species_in_Acer <- vancouver_trees %>% filter(genus_name == "Acer") 
+freq_ulmus_americana <- vancouver_trees %>% 
+  filter(species_name == "AMERICANA") %>% 
+  group_by(neighbourhood_name) %>% 
+  summarise(americana_per_neighbourhood = n())
 
-head(species_in_Acer)
+print(freq_ulmus_americana)
+
+mean_americana <- freq_ulmus_americana %>% summarize(mean = mean(americana_per_neighbourhood))
+print(paste0("The mean number of Ulmus Americana among Vancouver's neighbourhoods is ", mean_americana))
+
+range_americana <- freq_ulmus_americana %>% summarize(range = range(americana_per_neighbourhood))
+print(paste0("The range of the frequency of Ulmus Americana among Vancouver's neighbourhoods is ", range_americana))
 
 ```
 
-### Question 4
-**Are there any differences in the height range of all trees between neighbourhoods in Vancouver?**
-
-#### Summarizing: Based on two categorical variables, calculate two summary statistics of your choosing
-The code below will calculate the number of neighbourhoods represented in this dataset, then calculate the mean number of trees among neighbourhoods:
+#### Graphing: Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
+The code below will make a graph that shows the distribution of the frequency of Ulmus Americana among Vancouver's neighbourhoods.
 ```{r}
-unique_neighbourhoods <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(count = n())
-nrow(unique_neighbourhoods)
-print(unique_neighbourhoods)
+vancouver_trees %>% filter(species_name == "AMERICANA") %>% ggplot(aes(neighbourhood_name)) +
+  geom_histogram(stat = "count") +
+  ggtitle("Number of Ulmus Americana in Vancouver Neighbourhoods") +
+  ylab("Number of Ulmus Americana") +
+  xlab("Neighbourhood Name") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  scale_y_continuous(trans = "log10")
 
-unique_neighbourhoods %>% summarize(mean_trees_per_neighbourhood = mean(count))
-```
-The code below will the mean range of the heights of the trees represented in this dataset:
-```{r}
-mean_height_ranges <- vancouver_trees %>% summarize(mean_height = mean(height_range_id))
-print(mean_height_ranges)
 ```
 
-Note that this code has limitations - it does NOT account for any misspelled neighbourhoods or alternative names for the same neighbourhood.
+
+### Research Question 4
+
+#### Summarizing: Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data.
+The code below will calculate the mean of the heights of trees represented in this dataset.
+```{r}
+height_mean <- vancouver_trees %>% summarize(mean_height = mean(height_range_id))
+print(height_mean)
+```
+
+The code below will return the range of the heights of trees represented in this dataset.
+```{r}
+height_range <- vancouver_trees %>% summarize(height_range = range(height_range_id))
+print(height_range)
+
+```
+The code below will calculate the standard deviation of the height of trees in this dataset.
+```{r}
+height_sd <- sd(vancouver_trees$height_range_id)
+print(height_sd)
+```
+
+The code below will calculate the standard error of the height of trees in this dataset.
+```{r}
+height_se <- sd(vancouver_trees$height_range_id) / sqrt(nrow(vancouver_trees))
+print(height_se)
+
+```
 
 #### Graphing: Create a graph out of summarized variables that has at least two geom layers.
+The code below will create a bar graph that shows the count of trees present in each neighbourhood in Vancouver.
 ```{r}
-unique_neighbourhoods %>% ggplot(aes(x = neighbourhood_name, y = count)) +
+unique_neighbourhoods <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(num = n())
+
+unique_neighbourhoods %>% ggplot(aes(x = neighbourhood_name, y = num)) +
   geom_bar(stat = "identity") +
   coord_flip() +
   ggtitle("Number of Trees in Vancouver Neighbourhoods") +
