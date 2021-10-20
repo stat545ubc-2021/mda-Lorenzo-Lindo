@@ -73,7 +73,7 @@ Make sure it's clear what research question you are doing each operation for!
 <!------------------------- Start your work below ----------------------------->
 ### Research Question 1
 #### SUMMARIZING: Compute the number of observations for at least one of your categorical variables: species_name and genus_name
-The code below will return the number unique species represented in the dataset.
+The code below will return the number unique species represented in the dataset.  This doesn't really help me answer my research question, but it does give me a sense of the taxonomic diversity of this dataset.
 ```{r}
 unique_species <- vancouver_trees %>% group_by(species_name) %>% summarize(count = n())
 print(paste0("The number of unique species in the dataset is ", nrow(unique_species)))
@@ -82,14 +82,14 @@ unique_genera <- vancouver_trees %>% group_by(genus_name) %>% summarize(count = 
 print(paste0("The number of unique genera in the dataset is ", nrow(unique_genera)))
 
 ```
-The code below will return the number of observations where the species name is "Americana".
+The code below will return the number of observations where the species name is "Americana".  This also doesn't really help me answer the research question, but does give me some practice quantifying the frequency of a given value for a given variable.
 ```{r}
 num_Americana <- sum(with(vancouver_trees, species_name == "AMERICANA"))
 print(paste0("The number of observations where the species name is 'AMERICANA' is ", num_Americana))
 
 ```
 
-#### GRAPHING: The following code will display the number of trees found in the EVEN side of the streets compared to the ODD side of the streets in Vancouver then graph it with a logarithmic y-axis.
+#### GRAPHING: The following code will display the number of trees found in the EVEN side of the streets compared to the ODD side of the streets in Vancouver then graph it with a logarithmic y-axis.  The helps me answer this research question by allowing me to compare the number of trees that appear on the EVEN or ODD sides of streets in Vancouver.
 ```{r}
 even_vs_odd <- vancouver_trees %>% select(street_side_name) %>%  summarize(num_odd = sum(street_side_name == "ODD"), num_even = sum(street_side_name == "EVEN"))
 print(even_vs_odd)
@@ -107,6 +107,7 @@ vancouver_trees %>% filter(street_side_name %in% c("EVEN", "ODD")) %>% ggplot(ae
 ### Research Question 2
 
 #### SUMMARIZING: Compute the number of observations for at least one of your categorical variables.
+The following code allows me to quantify how many trees do and do not have a root barrier.  This helps me with the research question as I will be comparing the diameter of trees with and without root barriers.
 ```{r}
 no_root_barrier <- sum(with(vancouver_trees, root_barrier == "N"))
 has_root_barrier <- sum(with(vancouver_trees, root_barrier == "Y"))
@@ -114,7 +115,7 @@ print(paste0("The number of trees that have a root barrier is ", has_root_barrie
 ```
 
 #### GRAPHING: Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
-The code below will generate a bar graph comparing the number of trees with and without a root barrier.
+The code below will generate a bar graph comparing the number of trees with and without a root barrier.  This also helps me answer the research question by giving me a visual sense of how many trees do and do not have a root barrier.
 ```{r}
 vancouver_trees %>% filter(root_barrier %in% c("N", "Y")) %>% ggplot(aes(x = root_barrier)) +
   geom_bar() +
@@ -129,7 +130,7 @@ vancouver_trees %>% filter(root_barrier %in% c("N", "Y")) %>% ggplot(aes(x = roo
 ### Research Question 3
 
 #### SUMMARIZING: Based on two categorical variables, calculate two summary statistics of your choosing. 
-The code below will calculate the mean and range of the frequency of ULMUS AMERICANA among neighbourhoods in Vancouver.  It will first create a tibble that returns the number of ULMUS AMERICANA per neighbourhood.
+The code below will calculate the mean and range of the frequency of ULMUS AMERICANA among neighbourhoods in Vancouver.  It will first create a tibble that returns the number of ULMUS AMERICANA per neighbourhood.  This code helps me build a pipeline for calculating summary statistics that will help me answer this research question.
 ```{r}
 freq_ulmus_americana <- vancouver_trees %>% 
   filter(species_name == "AMERICANA") %>% 
@@ -147,7 +148,7 @@ print(paste0("The range of the frequency of Ulmus Americana among Vancouver's ne
 ```
 
 #### GRAPHING: Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
-The code below will make a graph that shows the distribution of the frequency of Ulmus Americana among Vancouver's neighbourhoods.
+The code below will make a graph that shows the distribution of the frequency of Ulmus Americana among Vancouver's neighbourhoods.  This is also provides a pipeline that I can use for further analyses for this research question.
 ```{r}
 vancouver_trees %>% filter(species_name == "AMERICANA") %>% ggplot(aes(neighbourhood_name)) +
   geom_histogram(stat = "count") +
@@ -189,7 +190,7 @@ print(height_se)
 ```
 
 #### GRAPHING: Create a graph out of summarized variables that has at least two geom layers.
-The code below will create a bar graph that shows the count of trees present in each neighbourhood in Vancouver.
+The code below will create a bar graph that shows the count of trees present in each neighbourhood in Vancouver.  I will be comparing the height range of trees in Vancouver neighbourhoods for this research question.  This graph will give me a sense of the frequency of trees in each Vancouver neighbourhood.  Since neighbourhoods vary considerably with regards to the number of trees they contain, it will be a caveat during comparisons as there is a different sample size of trees from each neighbourhood.
 ```{r}
 unique_neighbourhoods <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(num = n())
 
@@ -317,7 +318,7 @@ head(trees_scientific_names)
 Then, to tidy the data, we can separate the scientific name into its genus_name and species_name.
 ```{r}
 trees_restored_names <- trees_scientific_names %>% separate(col = scientific_name, into = c("genus_name", "species_name"))
-head(trees_restored_names)
+print(trees_restored_names)
 
 ```
 
@@ -330,7 +331,20 @@ Now, you should be more familiar with your data, and also have made progress in 
 Try to choose a version of your data that you think will be appropriate to answer these 2 questions in milestone 3. Use between 4 and 8 functions that we've covered so far (i.e. by filtering, cleaning, tidy'ing, dropping irrelvant columns, etc.). 
 
 <!--------------------------- Start your work below --------------------------->
+Based on the analyses that I have completed in this Milestone (Milestone 2), I would look to continue pursing **RESEARCH QUESTION 2** and **RESEARCH QUESTION 4**.  I have chosen to pursue **Research Question 2** because I am generally curious about how root barriers can affect the growth of trees.  I believe that this could give some insight into the environmental impact that human-made structures can have on trees.  I also think it would be an interesting opportunity to attempt statistical analyses in R.  I have chosen to pursue **Research Question 4** because I am interested in seeing how neighbourhoods compare to one another - the local biome of each neighbourhood is different from one another, so it would be intriuging to see how tree height compares.
 
+To facilitate my analyses as part of Research Questions 2 and 4, I will create a version of my data that is appropriate.  The first function will select those columns that I am interested in looking at.  While my analyses will primarily look at the tree_id, genus_name, species_name, root_barrier, neighbourhood_name, height_range_id, and diameter, I will also include the date_planted in case I wanted to do some other exploratory anaylses looking at how things trend with time.  In order to simplify my analyses, I will separate the date into year, month, and day.  Thirdly, since I would like to focus my analyses on diamter and height, I will remove those entries which have NA values for those variables. Fourthly, to make it easier when coding, I will rename some of the variables to simplify calling them.
+```{r}
+tidy_vancouver_trees <- vancouver_trees %>% select(tree_id, genus_name, species_name, root_barrier, neighbourhood_name, height_range_id, diameter, date_planted) %>%
+  separate(date_planted, into = c("year", "month", "day"), sep = "-") %>% 
+  filter(!is.na(height_range_id)) %>% 
+  filter(!is.na(diameter)) %>% 
+  rename(tree = tree_id, genus = genus_name, species = species_name, neighbourhood = neighbourhood_name, height = height_range_id)
+
+print(tidy_vancouver_trees)
+dim(tidy_vancouver_trees)
+
+```
 
 <!----------------------------------------------------------------------------->
 
