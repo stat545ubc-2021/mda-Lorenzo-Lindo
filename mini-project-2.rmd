@@ -42,7 +42,7 @@ From milestone 1, you should have an idea of the basic structure of your dataset
 First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
 
 <!-------------------------- Start your work below ---------------------------->
-1. Is there a significant difference in the number of trees between the East and West sides of Vancouver? I would be interested in seeing if there is any difference in the frequency of trees between the East and West sides and if this difference is statistically significant.  I would need to create a new categorical variable to classify trees as either in the East or West sides (I could divide Vancouver based on longitude) then plot a graph.
+1. Is there a significant difference in the number of trees between the different sides of the street (EVEN vs. ODD) in Vancouver? I would be interested in seeing if there is any difference in the frequency of trees between the East and West sides and if this difference is statistically significant.  I would need to create a new categorical variable to classify trees as either in the East or West sides (I could divide Vancouver based on longitude) then plot a graph.  NOTE - I had to modify this question from Milestone 1 as there are not enough decimals in the longitude to differentiate between East or West sides.
 2. Does the presence of a root barrier affect the diameter of trees? Root barriers are structures that are meant to guide tree roots down and away from human-made structures (e.g. building foundations, gas pipes, electrical wires).  I am interested to see if these root guides have any affect on the diameter of trees.
 3. Is there a difference in the frequency of tree species within a specific genus in a neighbourhood of interest? Within a specified neighbourhood (e.g. Riley Park), and within a given genus of interest (e.g. Prunus), are there any differences in the frequency among tree species?
 4. Are there any differences in the height range of all trees between neighbourhoods in Vancouver?  Neighbourhoods have a lot of differences, including local climates, levels of urbanization, and proximity to bodies of water (among others).  I would like to see if there is any statistically significant difference in the mean number of trees among Vancouver's neighbourhoods.
@@ -71,6 +71,86 @@ Ensure that the output of each operation is printed!
 Make sure it's clear what research question you are doing each operation for!
 
 <!------------------------- Start your work below ----------------------------->
+### Research Question 1
+#### Summarizing: Compute the number of observations for at least one of your categorical variables: species_name and genus_name
+The code below will return the number unique species represented in the dataset.
+```{r}
+unique_species <- vancouver_trees %>% group_by(species_name) %>% summarize(count = n())
+print(paste0("The number of unique species in the dataset is ", nrow(unique_species)))
+
+unique_genera <- vancouver_trees %>% group_by(genus_name) %>% summarize(count = n())
+print(paste0("The number of unique genera in the dataset is ", nrow(unique_genera)))
+
+```
+The code below will return the number of observations where the species name is "Americana".
+```{r}
+num_Americana <- sum(with(vancouver_trees, species_name == "AMERICANA"))
+print(paste0("The number of observations where the species name is 'AMERICANA' is ", num_Americana))
+
+```
+
+#### Graphing: The following code will display the number of trees found in the EVEN side of the streets compared to the ODD side of the streets in Vancouver then graph it with a logarithmic y-axis.
+```{r}
+even_vs_odd <- vancouver_trees %>% select(street_side_name) %>%  summarize(num_odd = sum(street_side_name == "ODD"), num_even = sum(street_side_name == "EVEN"))
+print(even_vs_odd)
+
+vancouver_trees %>% filter(street_side_name %in% c("EVEN", "ODD")) %>% ggplot(aes(x = street_side_name)) + 
+  geom_bar() +
+  scale_y_continuous(trans = "log10") +
+  xlab("Even or Odd Side of Street") +
+  ylab("Number of Trees") +
+  ggtitle("Number of trees found in Even or Odd sides of the street in Vancouver")
+
+```
+
+### Question 2
+**Does the presence of a root barrier affect the diameter of trees?**
+no_root_barrier <- sum(with(vancouver_trees, root_barrier == "N"))
+has_root_barrier <- sum(with(vancouver_trees, root_barrier == "Y"))
+num_observations <- nrow(vancouver_trees)
+
+### Question 3
+**Is there a difference in the frequency of tree species within a specific genus in a neighbourhood of interest? Within a specified neighbourhood (e.g. Riley Park), and within a given genus of interest (e.g. Prunus), are there any differences in the frequency among tree species?**
+
+#### Summarizing: Based on two categorical variables, calculate two summary statistics of your choosing. 
+The code below will calculate the mean frequency of each tree species within the "Acer" genus in the entire dataset.
+```{r}
+species_in_Acer <- vancouver_trees %>% filter(genus_name == "Acer") 
+
+head(species_in_Acer)
+
+```
+
+### Question 4
+**Are there any differences in the height range of all trees between neighbourhoods in Vancouver?**
+
+#### Summarizing: Based on two categorical variables, calculate two summary statistics of your choosing
+The code below will calculate the number of neighbourhoods represented in this dataset, then calculate the mean number of trees among neighbourhoods:
+```{r}
+unique_neighbourhoods <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(count = n())
+nrow(unique_neighbourhoods)
+print(unique_neighbourhoods)
+
+unique_neighbourhoods %>% summarize(mean_trees_per_neighbourhood = mean(count))
+```
+The code below will the mean range of the heights of the trees represented in this dataset:
+```{r}
+mean_height_ranges <- vancouver_trees %>% summarize(mean_height = mean(height_range_id))
+print(mean_height_ranges)
+```
+
+Note that this code has limitations - it does NOT account for any misspelled neighbourhoods or alternative names for the same neighbourhood.
+
+#### Graphing: Create a graph out of summarized variables that has at least two geom layers.
+```{r}
+unique_neighbourhoods %>% ggplot(aes(x = neighbourhood_name, y = count)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  ggtitle("Number of Trees in Vancouver Neighbourhoods") +
+  ylab("Count (Number)") +
+  xlab("Neighbourhood Name")
+
+```
 
 
 <!----------------------------------------------------------------------------->
