@@ -285,7 +285,9 @@ dataset.
 ``` r
 vancouver_trees %>% 
   ggplot(aes(x = diameter)) +
-  geom_histogram()
+  geom_histogram() +
+  xlab("Diameter (inches)") +
+  ylab("Number (count)")
 ```
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
@@ -341,7 +343,9 @@ and latitude on the y axis.
 ``` r
 vancouver_trees %>% 
   ggplot(aes(x = diameter, y = latitude)) +
-  geom_point()
+  geom_point() +
+  xlab("Diameter (inches)") +
+  ylab("Latitude")
 ```
 
     ## Warning: Removed 22771 rows containing missing values (geom_point).
@@ -367,8 +371,8 @@ vancouver_trees %>%
   ggplot(aes(x = root_barrier, y = height_range_id, colour = root_barrier)) +
   geom_boxplot() +
   labs(title = "Frequency of Root Barriers Among Vancouver Trees" ) +
-  xlab("Root Barrier? (variable = root_barrier)") +
-  ylab("Height Range (variable = height_range_id") +
+  xlab("Absence (N) or Presence (Y) of a Root Barrier") +
+  ylab("Height Range (x10 feet)") +
   theme_minimal()
 ```
 

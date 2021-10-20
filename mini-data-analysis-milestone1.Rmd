@@ -87,7 +87,9 @@ Plotting the distribution of the diameter of trees.  **Rationale**: This was don
 ```{r}
 vancouver_trees %>% 
   ggplot(aes(x = diameter)) +
-  geom_histogram()
+  geom_histogram() +
+  xlab("Diameter (inches)") +
+  ylab("Number (count)")
 ```
 
 #### Exercise Option 2: 
@@ -104,7 +106,9 @@ Exploring the relationship between the diameter of the trees and the latitude.  
 ```{r}
 vancouver_trees %>% 
   ggplot(aes(x = diameter, y = latitude)) +
-  geom_point()
+  geom_point() +
+  xlab("Diameter (inches)") +
+  ylab("Latitude")
 ```
   
 #### Exercise Option 6: 
@@ -115,8 +119,8 @@ vancouver_trees %>%
   ggplot(aes(x = root_barrier, y = height_range_id, colour = root_barrier)) +
   geom_boxplot() +
   labs(title = "Frequency of Root Barriers Among Vancouver Trees" ) +
-  xlab("Root Barrier? (variable = root_barrier)") +
-  ylab("Height Range (variable = height_range_id") +
+  xlab("Absence (N) or Presence (Y) of a Root Barrier") +
+  ylab("Height Range (x10 feet)") +
   theme_minimal()
 ```  
 
