@@ -167,9 +167,9 @@ Pick a research question, and pick a variable of interest (we'll call it "Y") th
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**: FILL_THIS_IN
+**Research Question**: Does the presence of a root barrier affect the diameter of trees? Root barriers are structures that are meant to guide tree roots down and away from human-made structures (e.g. building foundations, gas pipes, electrical wires).  I am interested to see if these root guides have any affect on the diameter of trees.
 
-**Variable of interest**: FILL_THIS_IN
+**Variable of interest**: diameter
 
 <!----------------------------------------------------------------------------->
 
@@ -184,7 +184,40 @@ Fit a model or run a hypothesis test that provides insight on this variable with
 
 <!-------------------------- Start your work below ---------------------------->
 
+```{r}
+# For this research question, my null hypothesis is that the presence of a root barrier has no effect on the mean diameter of trees.  The alternative hypothesis is that the presence of a root barrier has an effect on the mean diameter of trees.  I do not know in which direction this can have an effect, so I will do a two-tailed two-sample t test.
 
+# I will first create a new table that only includes the columns I want.
+
+condensed_trees <- vancouver_trees %>% select(diameter, root_barrier)
+head(condensed_trees)
+
+# I will then turn the root_barrier variable into a factor.
+
+condensed_trees$root_barrier <- as.factor(condensed_trees$root_barrier)
+class(condensed_trees$root_barrier)
+levels(condensed_trees$root_barrier)
+
+# I will also make the diameter variable into a numeric.
+
+condensed_trees$diameter <- as.numeric(condensed_trees$diameter)
+class(condensed_trees$diameter)
+
+condensed_trees %>% ggplot(aes(x = root_barrier, y = diameter)) +
+  geom_boxplot()
+
+# I can first compare the means of diameter between trees that have a root barrier (Y) and trees that do not (N).
+
+condensed_trees %>% group_by(root_barrier) %>% summarize(mean = mean(diameter))
+
+# As you can see, the means between the root barrier "Y" and "N" groups are different.  We can now test if this difference is statistically significant.  So now I will calculate the test statistic.
+
+effect_of_root_barriers <- t.test(diameter ~ root_barrier, data = condensed_trees)
+effect_of_root_barriers
+
+# As you can see, the p value is very very tiny, so it is a statistically significant difference.  Therefore, we can conclude that the presence or absence of a root barrier is associated with a statistically significant difference in the mean diameter of trees in the vancouver_trees dataset.
+
+```
 <!----------------------------------------------------------------------------->
 
 ## 2.2 (5 points)
