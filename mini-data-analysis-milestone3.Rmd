@@ -1,5 +1,5 @@
 ---
-title: "Mini Data-Analysis Deliverable 3"
+title: "Mini Data Analysis Milestone 3"
 output: github_document
 ---
 
@@ -39,8 +39,8 @@ library(tidyverse)
 From Milestone 2, you chose two research questions. What were they? Put them here.
 
 <!-------------------------- Start your work below ---------------------------->
-1. *FILL_THIS_IN*
-2. *FILL_THIS_IN*
+1. Does the presence of a root barrier affect the diameter of trees? Root barriers are structures that are meant to guide tree roots down and away from human-made structures (e.g. building foundations, gas pipes, electrical wires).  I am interested to see if these root guides have any affect on the diameter of trees.
+2. Are there any differences in the height range of all trees between neighbourhoods in Vancouver?  Neighbourhoods have a lot of differences, including local climates, levels of urbanization, and proximity to bodies of water (among others).  I would like to see if there is any statistically significant difference in the mean number of trees among Vancouver's neighbourhoods.
 <!----------------------------------------------------------------------------->
 
 
@@ -51,8 +51,13 @@ For this exercise, you'll be choosing two of the three tasks below -- both tasks
 But first, tasks 1 and 2 below ask you to modify a plot you made in a previous milestone. The plot you choose should involve plotting across at least three groups (whether by facetting, or using an aesthetic like colour). Place this plot below (you're allowed to modify the plot if you'd like). If you don't have such a plot, you'll need to make one. Place the code for your plot below.
 
 <!-------------------------- Start your work below ---------------------------->
+I don't have such a plot (one with at least three groups), so I will make a new one here.  For my Research Question 2, I would like to compare the differences in the distribution of height range of trees among Vancouver neighbourhoods.  Thus, for this activity, I will make a plot that will compare the distribution of height range of trees between three selected neighbourhoods in Vancouver.
 
+three_neighbourhood_height <- vancouver_trees %>% filter(neighbourhood_name %in% c("DOWNTOWN", "KITSILANO", "OAKRIDGE")) %>% group_by(neighbourhood_name)
 
+three_group_plot <- three_neighbourhood_height %>% ggplot(aes(x = height_range_id)) +
+  geom_histogram() +
+  facet_wrap(~ neighbourhood_name)
 
 <!----------------------------------------------------------------------------->
 
