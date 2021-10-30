@@ -9,7 +9,7 @@ This repository, entitled "mda-Lorenzo-Lindo", consists of files containing the 
 #### Completed Milestones Thus Far
 - [x] Milestone 1 (completed 9 October 2021)
 - [x] Milestone 2 (completed 19 October 2021)
-- [] Milestone 3
+- [x] Milestone 3 (completed 30 October 2021) NOTE - extension granted by TA (Tian Liu)
 
 #### List of Files Contained within this Repository
 Filename | Description
