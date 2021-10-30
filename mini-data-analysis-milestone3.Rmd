@@ -51,13 +51,20 @@ For this exercise, you'll be choosing two of the three tasks below -- both tasks
 But first, tasks 1 and 2 below ask you to modify a plot you made in a previous milestone. The plot you choose should involve plotting across at least three groups (whether by facetting, or using an aesthetic like colour). Place this plot below (you're allowed to modify the plot if you'd like). If you don't have such a plot, you'll need to make one. Place the code for your plot below.
 
 <!-------------------------- Start your work below ---------------------------->
-I don't have such a plot (one with at least three groups), so I will make a new one here.  For my Research Question 2, I would like to compare the differences in the distribution of height range of trees among Vancouver neighbourhoods.  Thus, for this activity, I will make a plot that will compare the distribution of height range of trees between three selected neighbourhoods in Vancouver.
+I don't have such a plot (one with at least three groups), so I will make a new one here.  For my Research Question 2, I would like to compare the differences in the distribution of height range of trees among Vancouver neighbourhoods.  Thus, for this activity, I will make a plot that will compare the distribution of height range of trees between five selected neighbourhoods in Vancouver.
 
-three_neighbourhood_height <- vancouver_trees %>% filter(neighbourhood_name %in% c("DOWNTOWN", "KITSILANO", "OAKRIDGE")) %>% group_by(neighbourhood_name)
+```{r}
 
-three_group_plot <- three_neighbourhood_height %>% ggplot(aes(x = height_range_id)) +
+# Here, I am filtering for 5 chosen neighbourhoods.  These are DOWNTOWN, KITSILANO, OAKRIDGE, SUNSET, and KERRISDALE.  I then group the data by the neighbourhood name.
+five_neighbourhood_height <- vancouver_trees %>% filter(neighbourhood_name %in% c("DOWNTOWN", "KITSILANO", "OAKRIDGE", "SUNSET", "KERRISDALE")) %>% group_by(neighbourhood_name)
+
+# Here, I plot a histogram showing the frequency distribution of the number of trees in each height_range_id value, faceted by neighbourhood_name.
+five_group_plot <- five_neighbourhood_height %>% ggplot(aes(x = height_range_id)) +
   geom_histogram() +
   facet_wrap(~ neighbourhood_name)
+  
+five_group_plot
+```
 
 <!----------------------------------------------------------------------------->
 
@@ -78,18 +85,75 @@ Now, choose two of the following tasks.
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Task Number**: FILL_THIS_IN
+**Task Number**: 2
+
+The plot below will group some factor levels together into a new category.  It is modified from the plot made above. What I've done is made new categories called height_level that will group trees based on the criteria below.  The criteria stipulates the groupings based on the value of the height_range_id. The code below the criteria will make a bar graph based on these new groupings and the plots will be faceted based on the neighbourhood_name.
 
 
+height_range_id | height_level
+----------------|----------
+Less Than 3 | short
+Between 3 and 6 | medium
+More Than 6 | tall
 
+
+```{r}
+
+# Based on the criteria set out above, I am creating new factors that group together trees into a new category called "height_level".  This new category will include factors called "short", "medium", and "tall" trees, based on the value of the height_range_id.
+five_neighbourhood_height_categories <- five_neighbourhood_height %>% 
+  mutate(height_level = case_when(height_range_id < 2 ~ "short",
+                                  height_range_id < 6 ~ "medium",
+                                  TRUE ~ "tall"))
+
+head(five_neighbourhood_height_categories)
+
+# I then plot a bar graph showing the count of trees in each height_level factor, faceted by neighbourhood_name.
+five_neighbourhood_height_categories %>% ggplot(aes(x = height_level)) +
+  geom_bar() +
+  facet_wrap(~neighbourhood_name)
+
+
+```
 <!----------------------------------------------------------------------------->
 
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Task Number**: FILL_THIS_IN
+**Task Number**: 3
 
+In this analysis, I have chosen to do Task Number 3 to investigate the month that each tree was planted.  I think this would be interesting because Vancouver experiences all 4 seasons, and so I would think that most trees would have been planted in the summer months.
 
+```{r}
+# First, load the reequired packages.
+suppressMessages(library(tsibble))
+suppressMessages(library(lubridate))
+
+# Extract the day and month from the date_planted.
+van_trees_sep_month_day <- vancouver_trees %>% 
+  mutate(day = day(date_planted),
+         month = month(date_planted))
+
+head(van_trees_sep_month_day)
+
+# Group the trees into seasons based on the date planted. 
+van_trees_seasons_planted <- van_trees_sep_month_day %>% 
+  mutate(season_planted = case_when(month %in% c(12, 1, 2) ~ "winter",
+                                  month %in% c(3, 4, 5) ~ "spring",
+                                  month %in% c(6, 7, 8) ~ "summer",
+                                  TRUE ~ "fall"))
+
+van_trees_seasons_planted %>% ggplot(aes(x = season_planted)) +
+  geom_bar()
+
+# I can also reorder the factors based on the number of trees planted in each season.
+
+van_trees_seasons_planted %>% mutate(season_planted = fct_infreq(season_planted)) %>% 
+  ggplot(aes(x = season_planted)) + 
+  geom_bar()
+
+# Now that I've plotted the data, I'm actually surprised to see that the vast majority of trees are planted in the fall, when I would have thought that it would have occurred in the summer time.
+
+```
 
 <!----------------------------------------------------------------------------->
 
