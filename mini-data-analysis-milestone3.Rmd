@@ -261,7 +261,22 @@ Take a summary table that you made from Milestone 2 (Exercise 1.2), and write it
 - **Reproducibility criteria**: You should be able to delete the csv file, and remake it simply by knitting this Rmd file. 
   
 <!-------------------------- Start your work below ---------------------------->
+```{r}
+# From Exercise 1.2 in Milestone 2, I will take the summary table I generated to quantify the number of trees that are found on EVEN and ODD sides of the street.
 
+# Code below was copied from part of my answers in Exercise 1.2 in Milestone 2.
+even_vs_odd <- vancouver_trees %>% select(street_side_name) %>% summarize(num_odd = sum(street_side_name == "ODD"), num_even = sum(street_side_name == "EVEN"))
+print(even_vs_odd)
+
+# I already created a folder called "output" manually using my systems file explorer (Finder on my Mac), but in case you wanted the code to create a folder, here it is as well.
+
+dir.create(here::here("output"))
+
+# I will now write the above tibble to a .csv file within the output folder.  There here::here() function is used so that this function could work if the repository / project folder is moved.
+
+write_csv(even_vs_odd, here::here("output", "exercise3-1.csv"))
+
+```
 
 <!----------------------------------------------------------------------------->
 
