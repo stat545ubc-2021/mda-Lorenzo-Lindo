@@ -229,6 +229,20 @@ Produce something relevant from your fitted model: either predictions on Y, or a
 - Obtain your results using the `broom` package if possible. If your model is not compatible with the broom function you're needing, then you can obtain your results by some other means, but first indicate which broom function is not compatible. 
   
 <!-------------------------- Start your work below ---------------------------->
+```{r}
+# Load the broom package.
+suppressMessages(library(broom))
+
+# In Exercise 2.1, I calculated the mean diameter of trees based on whether or not that had a root barrier.  I saw that the calculated means are different, and then I did a t.test to determine whether or not the difference was statistically significant. We can extract information from this t.test to figure out if the difference was statistically significant based on the calculated p-value.  
+
+# Using the broom package, we can get a tibble with a summary of the result
+glance(effect_of_root_barriers)
+
+# We can also extract the p-value
+p_value_root_barriers <- glance(effect_of_root_barriers)$p.value
+print(p_value_root_barriers)
+
+```
 
 
 <!----------------------------------------------------------------------------->
