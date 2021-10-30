@@ -268,9 +268,9 @@ Take a summary table that you made from Milestone 2 (Exercise 1.2), and write it
 even_vs_odd <- vancouver_trees %>% select(street_side_name) %>% summarize(num_odd = sum(street_side_name == "ODD"), num_even = sum(street_side_name == "EVEN"))
 print(even_vs_odd)
 
-# I already created a folder called "output" manually using my systems file explorer (Finder on my Mac), but in case you wanted the code to create a folder, here it is as well.
+# I already created a folder called "output" manually using my systems file explorer (Finder on my Mac), but in case you wanted the code to create a folder, here it is as well. It is commented out because I already have the folder made.
 
-dir.create(here::here("output"))
+# dir.create(here::here("output"))
 
 # I will now write the above tibble to a .csv file within the output folder.  There here::here() function is used so that this function could work if the repository / project folder is moved.
 
@@ -287,7 +287,16 @@ Write your model object from Exercise 2 to an R binary file (an RDS), and load i
 - The same robustness and reproducibility criteria as in 3.1 apply here.
 
 <!-------------------------- Start your work below ---------------------------->
+```{r}
+# The following code will write the model object that I created in Exercise 2 to an RDS file.
 
+saveRDS(effect_of_root_barriers, here::here("output", "exercise3-2.RDS"))
+
+# The following code will load the RDS file that I just created.
+
+readRDS(here::here("output", "exercise3-2.RDS"))
+
+```
 
 <!----------------------------------------------------------------------------->
 
