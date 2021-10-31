@@ -10,10 +10,10 @@ output: github_document
 ## Load the required packages.
 Run the following code to load the required packages for this mini data analysis.
 ```{r}
-library(datateachr)
-library(tidyverse)
-library(ggplot2)
-library(dplyr)
+suppressMessages(library(datateachr))
+suppressMessages(library(tidyverse))
+suppressMessages(library(ggplot2))
+suppressMessages(library(dplyr))
 ```
 
 ## Task 1 - Exploring My Datasets of Interest
