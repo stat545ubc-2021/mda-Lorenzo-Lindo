@@ -4,7 +4,11 @@
 
 ### Author: LINDO, Lorenzo
 
-This repository, entitled "mda-Lorenzo-Lindo", consists of files containing the work necessary to fulfill  the requirements of the 3 milestones for this Mini Data Analysis project for STAT545A. You can explore this repository by opening the Milestone 1, Milestone 2, and Milestone 3 folders to view the files related to each of those Milestones.  The output folder contains some output files created during Milestone 3.
+#### What is this repository?
+This repository, entitled "mda-Lorenzo-Lindo", consists of files containing the work necessary to fulfill  the requirements of the 3 milestones for this Mini Data Analysis project for STAT545A. 
+
+#### How to engage with this repository?
+You can explore this repository by opening the milestone-1, milestone-2, and milestone-3 folders to view the files related to each of those Milestones.  The output folder contains some output files created during Milestone 3.
 
 #### Completed Milestones Thus Far
 - [x] Milestone 1 (completed 9 October 2021)
