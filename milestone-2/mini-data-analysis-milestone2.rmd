@@ -166,26 +166,34 @@ vancouver_trees %>% filter(species_name == "AMERICANA") %>% ggplot(aes(neighbour
 #### SUMMARIZING: Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data.
 The code below will calculate the mean of the heights of trees represented in this dataset.
 ```{r}
-height_mean <- vancouver_trees %>% summarize(mean_height = mean(height_range_id))
-print(height_mean)
+# This code contains corrections based on the TA feedback for Milestone 2
+# It will return a tibble that has the mean of the heights of the trees, by neighbourhood_name.
+height_mean_v2 <- vancouver_trees %>% group_by(neighbourhood_name) %>%summarize(mean_height = mean(height_range_id))
+print(height_mean_v2)
 ```
 
 The code below will return the range of the heights of trees represented in this dataset.
 ```{r}
-height_range <- vancouver_trees %>% summarize(height_range = range(height_range_id))
-print(height_range)
+# This code contains corrections based on the TA feedback for Milestone 2
+# It will return a tibble that has the range of the heights of the trees, by neighbourhood_name.
+height_range_v2 <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(height_range = range(height_range_id))
+print(height_range_v2)
 
 ```
 The code below will calculate the standard deviation of the height of trees in this dataset.
 ```{r}
-height_sd <- sd(vancouver_trees$height_range_id)
-print(height_sd)
+# This code contains corrections based on the TA feedback for Milestone 2
+# It will return a tibble that has the standard deivation of the heights of the trees, by neighbourhood_name.
+height_sd_v2 <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(height_sd = sd(height_range_id))
+print(height_sd_v2)
 ```
 
-The code below will calculate the standard error of the height of trees in this dataset.
+The code below will calculate the median of the height of trees in this dataset.
 ```{r}
-height_se <- sd(vancouver_trees$height_range_id) / sqrt(nrow(vancouver_trees))
-print(height_se)
+# This code contains corrections based on the TA feedback for Milestone 2
+# It will return a tibble that has the median of the heights of the trees, by neighbourhood_name.
+height_median_v2 <- vancouver_trees %>% group_by(neighbourhood_name) %>% summarize(median_height = median(height_range_id))
+print(height_median_v2)
 
 ```
 
