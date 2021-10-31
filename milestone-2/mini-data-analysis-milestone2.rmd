@@ -273,9 +273,9 @@ Let's see if this subset of vancouver_trees satisfies the definition of *tidy* d
 
 - [x] Each row is an **observation**
 - [x] Each column is a **variable**
-- [] Each cell is a **value**
+- [x] Each cell is a **value**
 
-As we can see, there are some NA entries in our dataset - and our dataset is therefore NOT TIDY.
+As we can see, the data satisfies all of the requirements of tidy data.  Each row is an observation, each column is a variable, and each cell contains a value.
 
 If I wanted to increase the rigor of my assessment of the "tidiness" of this dataset, I could do the following to quantify how many NA values are present for each variable:
 ```{r}
@@ -317,33 +317,29 @@ If your data is untidy, then tidy it! Then, untidy it back to it's original stat
 Be sure to explain your reasoning for this task. Show us the "before" and "after".
 
 <!--------------------------- Start your work below --------------------------->
-As I have shown above, this subset (trees_subset) of the vancouver_trees dataset is NOT tidy because there are many missing values - particularly for the cultivar_name variable.
+As I have shown above, this subset (trees_subset) of the vancouver_trees dataset is tidy because it satisfies the criteria for tidy data.
 
-In order to tidy this dataset, I will remove all the entries with NA values for the cultivar.
+In order to untidy this dataset, I will widen the "assigned" variable.
 
 ```{r}
-trees_subset <- vancouver_trees %>% select(1:8)
+# Dimensions and Head of trees_subset
 head(trees_subset)
 dim(trees_subset)
 
-trees_subset_removeNA <- na.omit(trees_subset)
-head(trees_subset_removeNA)
-dim(trees_subset_removeNA)
+# Untidy the trees_subset
+untidy_trees_subset <- trees_subset %>% pivot_wider(names_from = assigned, values_from = assigned)
+head(untidy_trees_subset)
+dim(untidy_trees_subset)
 
-print(paste0("The number of observations in the original datasett is ", nrow(trees_subset), " whereas the number of rows in the tidy dataset after removing NA values is ", nrow(trees_subset_removeNA)))
 ```
+As you can see, we have gone from 8 columns (variables) in trees_subset to 9 columns (variables) in untidy_trees_subset. This was because I pivoted wider and put the "Y" or "N" values for the "assigned" variable as its their variables, resulting in a net increase by 1 more clumn.
 
-As you can see, we have gone from 146611 rows (observations) in trees_subset to 79063 rows (observations) in trees_subset_removeNA.  This means that there were 67559 rows containing an NA value.  This is concordant with the number of entries that have an NA for cultivar_name that we quantified in the section above.
+We can now re-tidy the data back to its original state.
+```{r}
+retidy_trees_subset <- untidy_trees_subset %>% pivot_longer(-c(tree_id:common_name), names_to = "assigned", values_to = "assigned", names_repair = "minimal", values_drop_na = TRUE)
 
-That being said, besides the NA values for the cultivar_name, the dataset is otherwise tidy because each column is a variable and each row is an observation.  Since it is tidy, we can untidy the data.  For example, we can combine the genus_name and species_name to give the scientific_name for each tree and therefore make the data untidy.  This makes the data untidy since we can no longer run analyses looking at genera or species separately.  
-```{r}
-trees_scientific_names <- trees_subset %>% unite(col = "scientific_name", genus_name, species_name, sep = " ")
-head(trees_scientific_names)
-```
-Then, to tidy the data, we can separate the scientific name into its genus_name and species_name.
-```{r}
-trees_restored_names <- trees_scientific_names %>% separate(col = scientific_name, into = c("genus_name", "species_name"))
-print(trees_restored_names)
+head(retidy_trees_subset)
+dim(retidy_trees_subset)
 
 ```
 
