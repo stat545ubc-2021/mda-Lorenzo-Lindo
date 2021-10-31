@@ -132,18 +132,19 @@ vancouver_trees %>% filter(root_barrier %in% c("N", "Y")) %>% ggplot(aes(x = roo
 #### SUMMARIZING: Based on two categorical variables, calculate two summary statistics of your choosing. 
 The code below will calculate the mean and range of the frequency of ULMUS AMERICANA among neighbourhoods in Vancouver.  It will first create a tibble that returns the number of ULMUS AMERICANA per neighbourhood.  This code helps me build a pipeline for calculating summary statistics that will help me answer this research question.
 ```{r}
+# One caveat I noticed with the code immediately below when I was doing my corrections to Milestone 2 is that doesn't only look at ULMUS AMERICANA - it quantifies species called "AMERICANA" in any genus.  If I wanted to look specifically at ULMUS AMERICANA, I would also run the code that is commented out below.
 freq_ulmus_americana <- vancouver_trees %>% 
-  filter(genus_name == "ULMUS") %>% 
+# filter(genus_name == "ULMUS) %>%   
   filter(species_name == "AMERICANA") %>% 
   group_by(neighbourhood_name) %>% 
-  summarise(americana_per_neighbourhood = n())
+  summarise(ulmus_americana_per_neighbourhood = n())
 
 print(freq_ulmus_americana)
 
-mean_americana <- freq_ulmus_americana %>% summarize(mean = mean(americana_per_neighbourhood))
+mean_americana <- freq_ulmus_americana %>% summarize(mean = mean(ulmus_americana_per_neighbourhood))
 print(paste0("The mean number of Ulmus Americana among Vancouver's neighbourhoods is ", mean_americana))
 
-range_americana <- freq_ulmus_americana %>% summarize(range = range(americana_per_neighbourhood))
+range_americana <- freq_ulmus_americana %>% summarize(range = range(ulmus_americana_per_neighbourhood))
 print(paste0("The range of the frequency of Ulmus Americana among Vancouver's neighbourhoods is ", range_americana))
 
 # This code contains corrections based on the TA feedback for Milestone 2
@@ -154,6 +155,12 @@ freq_ulmus <- vancouver_trees %>%
   summarise(ulmus_per_neighbourhood = n())
 
 print(freq_ulmus)
+
+mean_ulmus <- freq_ulmus %>% summarize(mean = mean(ulmus_per_neighbourhood))
+print(paste0("The mean number of Ulmus among Vancouver's neighbourhoods is ", mean_ulmus))
+
+range_ulmus <- freq_ulmus %>% summarize(range = range(ulmus_per_neighbourhood))
+print(paste0("The mean number of Ulmus among Vancouver's neighbourhoods is ", range_ulmus))
 
 ```
 
