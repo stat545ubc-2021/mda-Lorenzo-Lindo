@@ -6,7 +6,6 @@
 
 The folder is part of the Mini Data Analysis (MDA) Project and contains the source files for Milestone 3.
 
-
 #### List of Files Contained within this Repository
 Filename | Description
 ---------|------------
