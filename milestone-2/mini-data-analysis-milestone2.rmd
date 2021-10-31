@@ -319,29 +319,25 @@ Be sure to explain your reasoning for this task. Show us the "before" and "after
 <!--------------------------- Start your work below --------------------------->
 As I have shown above, this subset (trees_subset) of the vancouver_trees dataset is tidy because it satisfies the criteria for tidy data.
 
-In order to untidy this dataset, I will widen the "assigned" variable.
+Since it is tidy, we can untidy the data.  For example, we can combine the genus_name and species_name to give the scientific_name for each tree and therefore make the data untidy.  This makes the data untidy since we can no longer run analyses looking at genera or species separately. 
 
 ```{r}
 # Dimensions and Head of trees_subset
 head(trees_subset)
 dim(trees_subset)
 
-# Untidy the trees_subset
-untidy_trees_subset <- trees_subset %>% pivot_wider(names_from = assigned, values_from = assigned)
-head(untidy_trees_subset)
-dim(untidy_trees_subset)
-
+# Combining the genus_name and species_name
+trees_scientific_names <- trees_subset %>% unite(col = "scientific_name", genus_name, species_name, sep = " ")
+head(trees_scientific_names)
 ```
-As you can see, we have gone from 8 columns (variables) in trees_subset to 9 columns (variables) in untidy_trees_subset. This was because I pivoted wider and put the "Y" or "N" values for the "assigned" variable as its their variables, resulting in a net increase by 1 more clumn.
+As you can see, the genus_name and species_name have been combined to make the scientific_name variable.  It is untidy because now we can't run analyses separately on genera or species.
 
-We can now re-tidy the data back to its original state.
+So now, to tidy the data, we can separate the scientific name into its genus_name and species_name.
 ```{r}
-retidy_trees_subset <- untidy_trees_subset %>% pivot_longer(-c(tree_id:common_name), names_to = "assigned", values_to = "assigned", names_repair = "minimal", values_drop_na = TRUE)
-
-head(retidy_trees_subset)
-dim(retidy_trees_subset)
-
+trees_restored_names <- trees_scientific_names %>% separate(col = scientific_name, into = c("genus_name", "species_name"))
+print(trees_restored_names)
 ```
+The scientific_name has now been separated into two separate variables for genus_name and species_name.
 
 <!----------------------------------------------------------------------------->
 
