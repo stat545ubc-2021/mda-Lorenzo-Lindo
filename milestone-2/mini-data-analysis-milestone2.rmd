@@ -277,35 +277,6 @@ Let's see if this subset of vancouver_trees satisfies the definition of *tidy* d
 
 As we can see, the data satisfies all of the requirements of tidy data.  Each row is an observation, each column is a variable, and each cell contains a value.
 
-If I wanted to increase the rigor of my assessment of the "tidiness" of this dataset, I could do the following to quantify how many NA values are present for each variable:
-```{r}
-num_NA_tree_id <- sum(is.na(trees_subset$tree_id))
-print(num_NA_tree_id)
-
-num_NA_civic_number <- sum(is.na(trees_subset$civic_number))
-print(num_NA_civic_number)
-
-num_NA_std_street <- sum(is.na(trees_subset$std_street))
-print(num_NA_std_street)
-
-num_NA_genus_name <- sum(is.na(trees_subset$genus_name))
-print(num_NA_genus_name)
-
-num_NA_species_name <- sum(is.na(trees_subset$species_name))
-print(num_NA_species_name)
-
-num_NA_cultivar_name <- sum(is.na(trees_subset$cultivar_name))
-print(num_NA_cultivar_name)
-
-num_NA_common_name <- sum(is.na(trees_subset$common_name))
-print(num_NA_common_name)
-
-num_NA_assigned <- sum(is.na(trees_subset$assigned))
-print(num_NA_assigned)
-
-
-```
-
 <!----------------------------------------------------------------------------->
 
 ### 2.2 (5 points)
