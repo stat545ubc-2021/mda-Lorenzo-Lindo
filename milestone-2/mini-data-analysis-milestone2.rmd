@@ -133,6 +133,7 @@ vancouver_trees %>% filter(root_barrier %in% c("N", "Y")) %>% ggplot(aes(x = roo
 The code below will calculate the mean and range of the frequency of ULMUS AMERICANA among neighbourhoods in Vancouver.  It will first create a tibble that returns the number of ULMUS AMERICANA per neighbourhood.  This code helps me build a pipeline for calculating summary statistics that will help me answer this research question.
 ```{r}
 freq_ulmus_americana <- vancouver_trees %>% 
+  filter(genus_name == "ULMUS") %>% 
   filter(species_name == "AMERICANA") %>% 
   group_by(neighbourhood_name) %>% 
   summarise(americana_per_neighbourhood = n())
@@ -144,6 +145,15 @@ print(paste0("The mean number of Ulmus Americana among Vancouver's neighbourhood
 
 range_americana <- freq_ulmus_americana %>% summarize(range = range(americana_per_neighbourhood))
 print(paste0("The range of the frequency of Ulmus Americana among Vancouver's neighbourhoods is ", range_americana))
+
+# This code contains corrections based on the TA feedback for Milestone 2
+# Based on the feedback, I need to calculate summary statistics on two categorical variables.  So here is the calculation of summary statistics for another categorical variable, genus_name.
+freq_ulmus <- vancouver_trees %>% 
+  filter(genus_name == "ULMUS") %>% 
+  group_by(neighbourhood_name) %>% 
+  summarise(ulmus_per_neighbourhood = n())
+
+print(freq_ulmus)
 
 ```
 
